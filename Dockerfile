@@ -1,14 +1,12 @@
-# Usa uma imagem base do Java JDK 17 (ou a versão que você estiver usando)
-FROM eclipse-temurin:17-jdk
-
-# Define o diretório de trabalho dentro do container
+# Etapa 1: Compilar o projeto
+FROM eclipse-temurin:17-jdk AS builder
 WORKDIR /app
+COPY . .
+RUN ./mvnw clean package -DskipTests
 
-# Copia o arquivo JAR gerado para dentro do container
-COPY target/*.jar app.jar
-
-# Expõe a porta padrão do Spring Boot
+# Etapa 2: Criar a imagem final apenas com o JAR
+FROM eclipse-temurin:17-jdk
+WORKDIR /app
+COPY --from=builder /app/target/*.jar app.jar
 EXPOSE 8080
-
-# Comando para rodar a aplicação
 ENTRYPOINT ["java", "-jar", "app.jar"]
