@@ -15,7 +15,7 @@ public class Email {
         SimpleMailMessage message = new SimpleMailMessage();
 
 
-        texto.setMsg("angola é um \n é bem grande e bonita \n admilson afonso");
+        
 
         message.setTo(texto.getDestinatario());
         message.setSubject(texto.getAssunto());
