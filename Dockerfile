@@ -2,7 +2,7 @@
 FROM eclipse-temurin:17-jdk AS builder
 WORKDIR /app
 COPY . .
-RUN ./mvnw clean package -DskipTests
+RUN chmod +x mvnw && ./mvnw clean package -DskipTests
 
 # Etapa 2: Criar a imagem final apenas com o JAR
 FROM eclipse-temurin:17-jdk
